@@ -115,7 +115,7 @@ class PostEditScreen extends Screen
         $this->post->fill($request->get('post'))->save();
 
         // Alert::info('You have successfully created a post.');
-        Toast::info('You have successfully created a post.');
+        Toast::success('You have successfully created a post.');
 
         return redirect()->route('platform.post.list');
     }
@@ -128,7 +128,7 @@ class PostEditScreen extends Screen
         $this->post->delete();
 
         // Alert::info('You have successfully deleted the post.');
-        Toast::info('You have successfully deleted the post.');
+        Toast::success('You have successfully deleted the post.');
 
         return redirect()->route('platform.post.list');
     }

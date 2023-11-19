@@ -75,7 +75,7 @@ class PostListScreen extends Screen
         $post->delete();
 
         // Alert::info('You have successfully deleted the post.');
-        Toast::info('You have successfully deleted the post.');
+        Toast::success('You have successfully deleted the post.');
 
         return redirect()->route('platform.post.list');
     }
