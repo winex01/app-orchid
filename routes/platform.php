@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Tabuna\Breadcrumbs\Trail;
 use App\Orchid\Screens\TaskScreen;
+use App\Orchid\Screens\StateScreen;
 use Illuminate\Support\Facades\Route;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
@@ -100,6 +101,8 @@ Route::screen('task', TaskScreen::class)
             ->parent('platform.index')
             ->push('Task');
     });
+
+Route::screen('state', StateScreen::class)->name('platform.state');
 
 
 Route::screen('/examples/form/fields', ExampleFieldsScreen::class)->name('platform.example.fields');
