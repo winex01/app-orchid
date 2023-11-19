@@ -10,6 +10,7 @@ use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Quill;
 use Orchid\Screen\Actions\Button;
 use Orchid\Support\Facades\Alert;
+use Orchid\Support\Facades\Toast;
 use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\TextArea;
 use Orchid\Support\Facades\Layout;
@@ -113,7 +114,8 @@ class PostEditScreen extends Screen
     {
         $this->post->fill($request->get('post'))->save();
 
-        Alert::info('You have successfully created a post.');
+        // Alert::info('You have successfully created a post.');
+        Toast::info('You have successfully created a post.');
 
         return redirect()->route('platform.post.list');
     }
@@ -125,7 +127,8 @@ class PostEditScreen extends Screen
     {
         $this->post->delete();
 
-        Alert::info('You have successfully deleted the post.');
+        // Alert::info('You have successfully deleted the post.');
+        Toast::info('You have successfully deleted the post.');
 
         return redirect()->route('platform.post.list');
     }

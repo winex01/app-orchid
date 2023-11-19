@@ -6,6 +6,7 @@ use App\Models\Post;
 use Orchid\Screen\Screen;
 use Orchid\Screen\Actions\Link;
 use Orchid\Support\Facades\Alert;
+use Orchid\Support\Facades\Toast;
 use App\Orchid\Layouts\PostListLayout;
 
 class PostListScreen extends Screen
@@ -21,7 +22,7 @@ class PostListScreen extends Screen
             'posts' => Post::with('author')
                 ->filters()
                 ->defaultSort('title', 'asc')
-                 ->paginate(),
+                 ->paginate(10),
         ];
     }
 
@@ -73,7 +74,8 @@ class PostListScreen extends Screen
     {
         $post->delete();
 
-        Alert::info('You have successfully deleted the post.');
+        // Alert::info('You have successfully deleted the post.');
+        Toast::info('You have successfully deleted the post.');
 
         return redirect()->route('platform.post.list');
     }
