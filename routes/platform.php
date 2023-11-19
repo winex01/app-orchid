@@ -7,6 +7,8 @@ use App\Orchid\Screens\TaskScreen;
 use App\Orchid\Screens\StateScreen;
 use Illuminate\Support\Facades\Route;
 use App\Orchid\Screens\PlatformScreen;
+use App\Orchid\Screens\PostEditScreen;
+use App\Orchid\Screens\PostListScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
@@ -102,8 +104,31 @@ Route::screen('task', TaskScreen::class)
             ->push('Task');
     });
 
+// State/increment
 Route::screen('state', StateScreen::class)->name('platform.state');
 
+// Posts create/edit
+Route::screen('post/{post?}', PostEditScreen::class)
+    ->name('platform.post.edit')
+    ->breadcrumbs(function (Trail $trail, $postId = null) {
+        $trail->parent('platform.index')
+                ->push('Posts', route('platform.post.list'));
+
+        if ($postId !== null) {
+            $trail->push('Edit', route('platform.post.edit', $postId));
+        } else {
+            $trail->push('Create');
+        }
+    });
+
+// Posts lists
+Route::screen('posts', PostListScreen::class)
+    ->name('platform.post.list')
+    ->breadcrumbs(function (Trail $trail){
+        return $trail
+            ->parent('platform.index')
+            ->push('Posts');
+    });
 
 Route::screen('/examples/form/fields', ExampleFieldsScreen::class)->name('platform.example.fields');
 Route::screen('/examples/form/advanced', ExampleFieldsAdvancedScreen::class)->name('platform.example.advanced');

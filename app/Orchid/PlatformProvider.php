@@ -97,7 +97,11 @@ class PlatformProvider extends OrchidServiceProvider
 
             Menu::make('State')
                 ->icon('bag')
-                ->route('platform.state')
+                ->route('platform.state'),
+
+            Menu::make('Posts')
+                ->icon('bag')
+                ->route('platform.post.list'),
         ];
     }
 
