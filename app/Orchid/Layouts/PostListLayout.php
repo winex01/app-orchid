@@ -51,8 +51,9 @@ class PostListLayout extends Table
                 }),
             
 
+                
             TD::make('created_at', 'Created')->sort(),
-            TD::make('updated_at', 'Last edit')->sort(),
+            // TD::make('updated_at', 'Last edit')->sort(),
 
             // actions
             // TD::make('Actions')

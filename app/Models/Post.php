@@ -7,11 +7,14 @@ use Orchid\Filters\Filterable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Orchid\Attachment\Attachable;
 
 class Post extends Model
 {
-    use HasFactory, AsSource;
+    use HasFactory;
+    use AsSource;
     use Filterable;
+    use Attachable;
 
     protected $fillable = [
         'title',
