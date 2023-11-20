@@ -36,7 +36,7 @@ class PlatformProvider extends OrchidServiceProvider
         return [
             Menu::make('Get Started')
                 ->icon('bs.book')
-                ->title('Navigation')
+                ->title('Orchid Example')
                 ->route(config('platform.index')),
 
             Menu::make('Sample Screen')
@@ -89,6 +89,19 @@ class PlatformProvider extends OrchidServiceProvider
                 ->url('https://github.com/orchidsoftware/platform/blob/master/CHANGELOG.md')
                 ->target('_blank')
                 ->badge(fn () => Dashboard::version(), Color::DARK),
+
+            Menu::make('Tasks')
+                ->icon('bag')
+                ->route('platform.task')
+                ->title('Documentation'),
+
+            Menu::make('State')
+                ->icon('bag')
+                ->route('platform.state'),
+
+            Menu::make('Posts')
+                ->icon('bag')
+                ->route('platform.post.list'),
         ];
     }
 
