@@ -35,6 +35,21 @@ class PostListLayout extends Table
                     return Link::make($post->title)
                         ->route('platform.post.edit', $post);
                 }),
+            
+            TD::make('hero')
+                ->width('100')
+                ->render(function (Post $post) {
+
+                    if (!$post->hero) {
+                        return;
+                    }
+
+                    return "<img src='".$post->hero."'
+                                alt='sample'
+                                class='mw-100 d-block img-fluid rounded-1 w-100'>
+                            <span class='small text-muted mt-1 mb-0'># ".$post->id."</span>";
+                }),
+            
 
             TD::make('created_at', 'Created')->sort(),
             TD::make('updated_at', 'Last edit')->sort(),

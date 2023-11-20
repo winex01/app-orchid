@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Quill;
 use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Fields\Cropper;
 use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Toast;
 use Orchid\Screen\Fields\Relation;
@@ -87,6 +88,12 @@ class PostEditScreen extends Screen
                     ->title('Title')
                     ->placeholder('Attractive but mysterious title')
                     ->help('Specify a short descriptive title for this post.'),
+
+                Cropper::make('post.hero')
+                    ->title('Large web banner image, generally in the front and center')
+                    ->targetRelativeUrl()
+                    ->width(1000)
+                    ->height(500),
 
                 TextArea::make('post.description')
                     ->title('Description')

@@ -17,7 +17,8 @@ class Post extends Model
         'title',
         'description',
         'body',
-        'author'
+        'author',
+        'hero',
     ];
 
     /**
@@ -35,5 +36,11 @@ class Post extends Model
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getHeroAttribute($value)
+    {
+        // Remove only one leading slash if it exists at the beginning of the 'hero' attribute
+        return preg_replace('/^\/{1}/', '', $value);
     }
 }
