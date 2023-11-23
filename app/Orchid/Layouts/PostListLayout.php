@@ -5,6 +5,7 @@ namespace App\Orchid\Layouts;
 use App\Models\Post;
 use Orchid\Screen\TD;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
@@ -29,15 +30,9 @@ class PostListLayout extends Table
     protected function columns(): iterable
     {
         return [
-            TD::make('title', 'Title')
-                ->sort()
-                ->render(function (Post $post) {
-                    return Link::make($post->title)
-                        ->route('platform.post.edit', $post);
-                }),
-            
             TD::make('hero')
                 ->width('100')
+                ->cantHide()
                 ->render(function (Post $post) {
 
                     if (!$post->hero) {
@@ -50,9 +45,18 @@ class PostListLayout extends Table
                             <span class='small text-muted mt-1 mb-0'># ".$post->id."</span>";
                 }),
             
-
-            TD::make('created_at', 'Created')->sort(),
-            TD::make('updated_at', 'Last edit')->sort(),
+            TD::make('title', 'Title')
+                ->sort()
+                ->filter(Input::make())
+                ->cantHide()
+                ->render(function (Post $post) {
+                    return Link::make($post->title)
+                        ->route('platform.post.edit', $post);
+                }),
+                
+            TD::make('description')->sort()->filter(Input::make()),
+            TD::make('created_at', 'Created'),
+            // TD::make('updated_at', 'Last edit')->sort(),
 
             // actions
             // TD::make('Actions')

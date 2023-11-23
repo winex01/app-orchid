@@ -24,6 +24,10 @@ class PlatformProvider extends OrchidServiceProvider
         parent::boot($dashboard);
 
         // ...
+        Dashboard::useModel(
+            \Orchid\Platform\Models\User::class,
+            \App\Models\User::class
+        );
     }
 
     /**

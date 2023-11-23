@@ -4,14 +4,18 @@ namespace App\Models;
 
 use Orchid\Screen\AsSource;
 use Orchid\Filters\Filterable;
+use Orchid\Filters\Types\Like;
+use Orchid\Attachment\Attachable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
-    use HasFactory, AsSource;
+    use HasFactory;
+    use AsSource;
     use Filterable;
+    use Attachable;
 
     protected $fillable = [
         'title',
@@ -33,14 +37,25 @@ class Post extends Model
         'author'
     ];
 
+    /**
+     * Name of columns to which http filter can be applied
+     *
+     * @var array
+     */
+    protected $allowedFilters = [
+        'title' => Like::class,
+        'description' => Like::class,
+    ];
+
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function getHeroAttribute($value)
+    // Mutator for the 'hero' attribute
+    public function setHeroAttribute($value)
     {
-        // Remove only one leading slash if it exists at the beginning of the 'hero' attribute
-        return preg_replace('/^\/{1}/', '', $value);
+        $filteredValue = str_replace('//', '/', $value);
+        $this->attributes['hero'] = $filteredValue;
     }
 }

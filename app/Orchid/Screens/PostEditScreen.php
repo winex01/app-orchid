@@ -8,6 +8,7 @@ use Orchid\Screen\Screen;
 use Illuminate\Http\Request;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Quill;
+use Orchid\Screen\Fields\Upload;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\Cropper;
 use Orchid\Support\Facades\Alert;
@@ -27,6 +28,8 @@ class PostEditScreen extends Screen
      */
     public function query(Post $post): iterable
     {
+        // $post->load('attachment');
+
         return [
             'post' => $post
         ];
@@ -108,6 +111,9 @@ class PostEditScreen extends Screen
                 Quill::make('post.body')
                     ->title('Main text'),
 
+                Upload::make('post.attachment')
+                    ->title('All files')
+
             ])
         ];
     }
@@ -120,6 +126,10 @@ class PostEditScreen extends Screen
     public function createOrUpdate(Request $request)
     {
         $this->post->fill($request->get('post'))->save();
+
+        $this->post->attachment()->syncWithoutDetaching(
+            $request->input('post.attachment', [])
+        );
 
         // Alert::info('You have successfully created a post.');
         Toast::success('You have successfully created a post.');
