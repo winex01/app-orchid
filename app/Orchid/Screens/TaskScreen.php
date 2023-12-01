@@ -14,8 +14,10 @@ use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Toast;
 use Orchid\Screen\Fields\Relation;
 use Orchid\Support\Facades\Layout;
+use App\Orchid\Filters\EmailFilter;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\ModalToggle;
+use App\Orchid\Layouts\TaskFiltersLayout;
 
 class TaskScreen extends Screen
 {
@@ -27,7 +29,12 @@ class TaskScreen extends Screen
     public function query(): iterable
     {
         return [
-            'tasks' => Task::latest()->get()
+            // 'tasks' => Task::latest()->get()
+            'tasks' => Task::
+                // filters(TaskFiltersLayout::class)
+                filters([EmailFilter::class])
+                ->defaultSort('id', 'desc')
+                ->paginate(5),
         ];
     }
 
@@ -72,9 +79,15 @@ class TaskScreen extends Screen
     public function layout(): iterable
     {
         return [
+            // TaskFiltersLayout::class,
+            Layout::selection([
+                EmailFilter::class,
+            ]),
             // table
             Layout::table('tasks', [
-                TD::make('name'),
+                TD::make('name')
+                    ->sort()
+                    ->filter(TD::FILTER_TEXT),
                 
                 TD::make('user.name', 'Assignee')
                 ->render(function ($task) {
@@ -87,9 +100,9 @@ class TaskScreen extends Screen
                         ->route('platform.systems.users.edit', $task->user->id);
                     // return dump($task);
                 })
-                // ->sort()
-                // ->filter(TD::FILTER_TEXT),
-                ,
+                ->sort()
+                ->filter(),
+
                 // actions
                 TD::make(__('Actions'))
                     ->align(TD::ALIGN_CENTER)
